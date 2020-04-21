@@ -1,0 +1,14 @@
+{
+  "description": "Adds an A and PTR record for the given hostname and IP to the target DNS server provisioned by the vagrant_bolt_bind plan.",
+  "input_method": "environment",
+  "parameters": {
+    "ipaddress": {
+      "description": "IP address of the new entry",
+      "type": "String[1]"
+    },
+    "hostname": {
+      "description": "Fully qualified host name of the new host entry",
+      "type": "String[1]"
+    }
+  }
+}
