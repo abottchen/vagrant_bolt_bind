@@ -1,0 +1,8 @@
+   $ip_arr = split($facts['networking']['ip'], "[.]")
+    $reversed_ip = join($ip_arr[1,3].reverse_each.map |$i| { $i }, '.')
+
+    file{'/srv/docker/bind/bind/lib/10.rev':
+      ensure => file,
+      content => epp('vagrant_bolt_bind/10.rev', 'reversed_ip' => $reversed_ip),
+    }
+

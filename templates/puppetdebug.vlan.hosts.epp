@@ -1,0 +1,13 @@
+<%- | Boolean $add_localhost
+| -%>
+$ttl 38400
+@ IN  SOA <%= $facts[fqdn] %>. adam\.bottchen.puppet.com. (
+      1539295122
+      10800
+      3600
+      604800
+      38400 )
+puppetdebug.vlan. IN  NS  <%= $facts[fqdn] %>.
+<% if $add_localhost { -%>
+<%= $facts[fqdn] %>. IN  A <%= $facts[networking][ip] %>
+<% } -%>

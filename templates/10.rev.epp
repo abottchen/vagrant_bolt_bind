@@ -1,0 +1,14 @@
+<%- | String $reversed_ip,
+      Boolean $add_localhost
+| -%>
+$ttl 38400
+@ IN  SOA <%= $facts[fqdn] %>. adam\.bottchen.puppet.com. (
+      1539294830
+      10800
+      3600
+      604800
+      38400 )
+10.in-addr.arpa.  IN  NS  <%= $facts[fqdn] %>.
+<% if $add_localhost { -%>
+<%= $reversed_ip %> IN PTR <%= $facts[fqdn] %>.
+<% } -%>
