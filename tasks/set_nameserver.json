@@ -1,0 +1,10 @@
+{
+  "description": "Adds the given IP address as the first nameserver entry in the target's /etc/resolv.conf",
+  "input_method": "environment",
+  "parameters": {
+    "ipaddress": {
+      "description": "IP address of the nameserver to add",
+      "type": "String[1]"
+    }
+  }
+}
