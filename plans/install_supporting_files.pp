@@ -12,7 +12,12 @@ plan vagrant_bolt_bind::install_supporting_files(
   run_task('vagrant_bolt_bind::extract_supporting_files', $targets)
 
   apply($targets) {
-    $ip_arr = split($facts['networking']['ip'], "[.]")
+    if $facts['ec2_metadata'] {
+        $ip_arr = split($facts['ec2_metadata']['public-ipv4'], "[.]")
+    } else {
+        $ip_arr = split($facts['networking']['ip'], "[.]")
+    }
+
     $reversed_ip = join($ip_arr[1,3].reverse_each.map |$i| { $i }, '.')
     $add_localhost = $facts['fqdn'] =~ /puppetdebug.vlan$/
     
