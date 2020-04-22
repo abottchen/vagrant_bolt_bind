@@ -13,13 +13,14 @@ plan vagrant_bolt_bind::install_supporting_files(
 
   apply($targets) {
     if $facts['ec2_metadata'] {
-        $ip_arr = split($facts['ec2_metadata']['public-ipv4'], "[.]")
+        $ip = $facts['ec2_metadata']['public-ipv4']
     } else {
-        $ip_arr = split($facts['networking']['ip'], "[.]")
+        $ip = $facts['networking']['ip']
     }
 
+    $ip_arr = split($ip, "[.]")
     $reversed_ip = join($ip_arr[1,3].reverse_each.map |$i| { $i }, '.')
-    $add_localhost = $facts['fqdn'] =~ /puppetdebug.vlan$/
+    $add_localhost = $facts['fqdn'] =~ /puppetdebug.vlan$/ and $ip =~ /^10/
     
     file{'/srv/docker/bind/bind/lib/10.rev':
       ensure => file,
@@ -27,7 +28,7 @@ plan vagrant_bolt_bind::install_supporting_files(
     }
     file{'/srv/docker/bind/bind/lib/puppetdebug.vlan.hosts':
       ensure => file,
-      content => epp('vagrant_bolt_bind/puppetdebug.vlan.hosts', 'add_localhost' => $add_localhost),
+      content => epp('vagrant_bolt_bind/puppetdebug.vlan.hosts', 'add_localhost' => $add_localhost, 'ip' => $ip),
     }
   }
 }
