@@ -57,10 +57,10 @@ if [ ! -z "${existing_line}" ]; then
 { "_error": {
     "msg": "Task exited 1:\nMatching A record already present:\n'${existing_line}'",
     "kind": "vagrant_bolt_bind.add_host/task-error",
-    "details": { "exitcode": 1 }
+    "details": { "exitcode": 0 }
 }
 EOF
-  exit 1
+  exit 0
 fi
 
 if ! existing_line=$(grep -q "${new_reverse_line}" "${reverse_file}"); then
@@ -72,10 +72,10 @@ if [ ! -z "${existing_line}" ]; then
 { "_error": {
     "msg": "Task exited 1:\nMatching PTR record already present:\n'${existing_line}'",
     "kind": "vagrant_bolt_bind.add_host/task-error",
-    "details": { "exitcode": 1 }
+    "details": { "exitcode": 0 }
 }
 EOF
-  exit 1
+  exit 0
 fi
 
 # restart the service
